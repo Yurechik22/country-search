@@ -8,3 +8,13 @@ export class HttpError extends Error {
     this.status = status;
   }
 }
+
+export type ErrorKind = 'aborted' | 'timeout' | 'http' | 'network';
+
+export function classifyError(_error: unknown): ErrorKind {
+  throw new Error('Not implemented');
+}
+
+export function describeError(_error: unknown): string {
+  throw new Error('Not implemented');
+}
