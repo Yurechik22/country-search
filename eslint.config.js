@@ -19,6 +19,10 @@ export default tseslint.config(
       'prefer-const': 'error',
       '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],
       '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
       'no-restricted-properties': [
         'error',
         { property: 'innerHTML', message: 'Build DOM nodes with createElement/textContent.' },
