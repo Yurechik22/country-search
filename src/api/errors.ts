@@ -11,10 +11,33 @@ export class HttpError extends Error {
 
 export type ErrorKind = 'aborted' | 'timeout' | 'http' | 'network';
 
-export function classifyError(_error: unknown): ErrorKind {
-  throw new Error('Not implemented');
+function hasName(error: unknown, name: string): boolean {
+  return typeof error === 'object' && error !== null && 'name' in error && error.name === name;
 }
 
-export function describeError(_error: unknown): string {
-  throw new Error('Not implemented');
+/**
+ * Splits a failed request into the cases the UI handles differently:
+ * - `aborted`  – we cancelled it ourselves (newer query): show nothing;
+ * - `timeout`  – AbortSignal.timeout fired: show an error;
+ * - `http`     – server answered with a non-ok status: error + retry;
+ * - `network`  – fetch rejected (offline, DNS, CORS…): error + retry.
+ */
+export function classifyError(error: unknown): ErrorKind {
+  if (error instanceof HttpError) return 'http';
+  if (hasName(error, 'AbortError')) return 'aborted';
+  if (hasName(error, 'TimeoutError')) return 'timeout';
+  return 'network';
+}
+
+export function describeError(error: unknown): string {
+  switch (classifyError(error)) {
+    case 'timeout':
+      return 'The server is taking too long to respond. Please try again.';
+    case 'http':
+      return `The server returned an error (HTTP ${(error as HttpError).status}).`;
+    case 'network':
+      return 'Network error. Check your connection and try again.';
+    case 'aborted':
+      return 'The request was cancelled.';
+  }
 }
