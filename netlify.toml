@@ -1,0 +1,7 @@
+[build]
+  command = "npm run build:site"
+  publish = "site"
+
+[build.environment]
+  NODE_VERSION = "22"
+  HUSKY = "0"
