@@ -72,14 +72,14 @@ Debounce и abort решают разные задачи: debounce уменьш�
 
 ## 4. Принципы чистого кода
 
-| Принцип | Где |
-| --- | --- |
-| **Single Responsibility** | `searchCountries` только ходит в сеть; `mapCountryResponse` только преобразует данные; `SearchController` только управляет жизненным циклом запроса; `AppView` только рисует состояние. |
-| **Разделение логики и DOM** | Ни один файл вне `src/ui` и `src/main.ts` не обращается к `document`. Контроллер общается с UI через колбэк `onChange(state)` (`src/search/search-controller.ts`). |
-| **Состояние как размеченное объединение** | `SearchState` (`src/search/search-state.ts`) — `idle / loading / success / empty / error`. Невозможные комбинации (например, «загрузка + ошибка») не выражаются типом; `switch` в `AppView.render` проверяется компилятором на полноту. |
-| **Dependency Injection** | Контроллер получает `search: SearchFn` снаружи, `SearchHistory` — `KeyValueStorage`. Поэтому тесты подставляют моки без DOM и сети, а кэш подключается в `main.ts` одной строкой. |
-| **Pure functions** | `mapCountryResponse`, `classifyError`, `describeError`, `formatNumber`, `formatList`. |
-| **Говорящие имена и отсутствие магических чисел** | `SEARCH_DEBOUNCE_MS`, `REQUEST_TIMEOUT_MS` (`src/config.ts`), `NOT_FOUND` (`countries-api.ts`). |
-| **Fail-safe** | `SearchHistory` переживает битый JSON, приватный режим и переполнение storage; `mapCountryResponse` даёт безопасные значения по умолчанию для отсутствующих полей. |
-| **Безопасность DOM** | Все узлы создаются через `el()` (`src/ui/dom.ts`) с `textContent`; `innerHTML` / `insertAdjacentHTML` запрещены правилом ESLint `no-restricted-properties`. |
-| **TDD** | Для `debounce`, `mapCountryResponse`, `searchCountries`/`HttpError`, классификации ошибок, контроллера, кэша и истории сначала идёт коммит с падающими тестами, затем — реализация. |
+| Принцип                                           | Где                                                                                                                                                                                                                                     |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Single Responsibility**                         | `searchCountries` только ходит в сеть; `mapCountryResponse` только преобразует данные; `SearchController` только управляет жизненным циклом запроса; `AppView` только рисует состояние.                                                 |
+| **Разделение логики и DOM**                       | Ни один файл вне `src/ui` и `src/main.ts` не обращается к `document`. Контроллер общается с UI через колбэк `onChange(state)` (`src/search/search-controller.ts`).                                                                      |
+| **Состояние как размеченное объединение**         | `SearchState` (`src/search/search-state.ts`) — `idle / loading / success / empty / error`. Невозможные комбинации (например, «загрузка + ошибка») не выражаются типом; `switch` в `AppView.render` проверяется компилятором на полноту. |
+| **Dependency Injection**                          | Контроллер получает `search: SearchFn` снаружи, `SearchHistory` — `KeyValueStorage`. Поэтому тесты подставляют моки без DOM и сети, а кэш подключается в `main.ts` одной строкой.                                                       |
+| **Pure functions**                                | `mapCountryResponse`, `classifyError`, `describeError`, `formatNumber`, `formatList`.                                                                                                                                                   |
+| **Говорящие имена и отсутствие магических чисел** | `SEARCH_DEBOUNCE_MS`, `REQUEST_TIMEOUT_MS` (`src/config.ts`), `NOT_FOUND` (`countries-api.ts`).                                                                                                                                         |
+| **Fail-safe**                                     | `SearchHistory` переживает битый JSON, приватный режим и переполнение storage; `mapCountryResponse` даёт безопасные значения по умолчанию для отсутствующих полей.                                                                      |
+| **Безопасность DOM**                              | Все узлы создаются через `el()` (`src/ui/dom.ts`) с `textContent`; `innerHTML` / `insertAdjacentHTML` запрещены правилом ESLint `no-restricted-properties`.                                                                             |
+| **TDD**                                           | Для `debounce`, `mapCountryResponse`, `searchCountries`/`HttpError`, классификации ошибок, контроллера, кэша и истории сначала идёт коммит с падающими тестами, затем — реализация.                                                     |

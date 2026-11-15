@@ -31,16 +31,16 @@ npm start         # serve the project root, open the printed URL
 
 ## Scripts
 
-| Script               | What it does                                       |
-| -------------------- | -------------------------------------------------- |
-| `npm run build`      | Compile TypeScript to `dist/`                      |
-| `npm run watch`      | Compile in watch mode                              |
-| `npm run build:site` | Build and assemble the deployable site in `site/`  |
-| `npm test`           | Run unit tests once                                |
-| `npm run test:watch` | Run tests in watch mode                            |
-| `npm run lint`       | ESLint                                             |
-| `npm run format`     | Prettier (write)                                   |
-| `npm run typecheck`  | Type-check without emitting                        |
+| Script               | What it does                                      |
+| -------------------- | ------------------------------------------------- |
+| `npm run build`      | Compile TypeScript to `dist/`                     |
+| `npm run watch`      | Compile in watch mode                             |
+| `npm run build:site` | Build and assemble the deployable site in `site/` |
+| `npm test`           | Run unit tests once                               |
+| `npm run test:watch` | Run tests in watch mode                           |
+| `npm run lint`       | ESLint                                            |
+| `npm run format`     | Prettier (write)                                  |
+| `npm run typecheck`  | Type-check without emitting                       |
 
 ## Project structure
 
