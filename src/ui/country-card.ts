@@ -10,7 +10,10 @@ function createFact(label: string, value: string): HTMLElement {
   ]);
 }
 
-export function createCountryCard(country: Country, onSelect: (country: Country) => void): HTMLElement {
+export function createCountryCard(
+  country: Country,
+  onSelect: (country: Country) => void,
+): HTMLElement {
   const button = el('button', { className: 'card', attrs: { type: 'button' } }, [
     createFlag(country, 'card__flag'),
     el('div', { className: 'card__body' }, [

@@ -32,7 +32,10 @@ export class AppView {
     });
     this.input.addEventListener('input', () => this.handlers.onQueryChange(this.input.value));
 
-    this.status = el('div', { className: 'status', attrs: { role: 'status', 'aria-live': 'polite' } });
+    this.status = el('div', {
+      className: 'status',
+      attrs: { role: 'status', 'aria-live': 'polite' },
+    });
     this.results = el('ul', { className: 'results', attrs: { 'aria-label': 'Search results' } });
 
     this.root = el('main', { className: 'app' }, [

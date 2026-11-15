@@ -35,10 +35,11 @@ export class CountryDetails {
     close.addEventListener('click', () => this.dialog.close());
 
     this.body = el('div');
-    this.dialog = el('dialog', { className: 'details', attrs: { 'aria-labelledby': 'details-title' } }, [
-      close,
-      this.body,
-    ]);
+    this.dialog = el(
+      'dialog',
+      { className: 'details', attrs: { 'aria-labelledby': 'details-title' } },
+      [close, this.body],
+    );
 
     // Click on the backdrop (outside the content) closes the dialog.
     this.dialog.addEventListener('click', (event) => {
@@ -54,7 +55,11 @@ export class CountryDetails {
     this.body.replaceChildren(
       createFlag(country, 'details__flag'),
       el('div', { className: 'details__content' }, [
-        el('h2', { className: 'details__title', text: country.name, attrs: { id: 'details-title' } }),
+        el('h2', {
+          className: 'details__title',
+          text: country.name,
+          attrs: { id: 'details-title' },
+        }),
         el('p', { className: 'details__description', text: country.description }),
         createFacts(country),
       ]),

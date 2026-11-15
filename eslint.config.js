@@ -27,7 +27,10 @@ export default tseslint.config(
         'error',
         { property: 'innerHTML', message: 'Build DOM nodes with createElement/textContent.' },
         { property: 'outerHTML', message: 'Build DOM nodes with createElement/textContent.' },
-        { property: 'insertAdjacentHTML', message: 'Build DOM nodes with createElement/textContent.' },
+        {
+          property: 'insertAdjacentHTML',
+          message: 'Build DOM nodes with createElement/textContent.',
+        },
       ],
     },
   },

@@ -24,9 +24,9 @@ function getStorage(): KeyValueStorage {
     // Access to localStorage itself can throw (e.g. blocked cookies).
     const memory = new Map<string, string>();
     return {
-      getItem: (key) => memory.get(key) ?? null,
-      setItem: (key, value) => void memory.set(key, value),
-      removeItem: (key) => void memory.delete(key),
+      getItem: (key: string): string | null => memory.get(key) ?? null,
+      setItem: (key: string, value: string): void => void memory.set(key, value),
+      removeItem: (key: string): void => void memory.delete(key),
     };
   }
 }
@@ -54,7 +54,10 @@ const controller = new SearchController({
   onChange: handleStateChange,
 });
 
-const debouncedSearch = debounce((query: string) => void controller.search(query), SEARCH_DEBOUNCE_MS);
+const debouncedSearch = debounce(
+  (query: string) => void controller.search(query),
+  SEARCH_DEBOUNCE_MS,
+);
 
 function handleStateChange(state: SearchState): void {
   view.render(state);

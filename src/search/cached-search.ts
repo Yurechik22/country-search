@@ -32,7 +32,12 @@ export function createCachedSearch(search: SearchFn): CachedSearch {
 
   function createEntry(key: string, query: string): CacheEntry {
     const controller = new AbortController();
-    const entry: CacheEntry = { controller, subscribers: 0, settled: false, promise: Promise.resolve([]) };
+    const entry: CacheEntry = {
+      controller,
+      subscribers: 0,
+      settled: false,
+      promise: Promise.resolve([]),
+    };
 
     entry.promise = search(query, controller.signal).then(
       (countries) => {
@@ -91,14 +96,14 @@ export function createCachedSearch(search: SearchFn): CachedSearch {
   }
 
   return {
-    search(query, signal) {
+    search(query: string, signal: AbortSignal): Promise<Country[]> {
       if (signal.aborted) return Promise.reject(signal.reason);
 
       const key = normalizeKey(query);
       const entry = cache.get(key) ?? createEntry(key, query);
       return subscribe(key, entry, signal);
     },
-    clear() {
+    clear(): void {
       cache.clear();
     },
   };
