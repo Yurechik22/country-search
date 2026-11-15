@@ -1,6 +1,7 @@
 import { searchCountries } from './api/countries-api.js';
 import { REQUEST_TIMEOUT_MS, SEARCH_DEBOUNCE_MS } from './config.js';
 import { mapCountryResponse } from './domain/map-country.js';
+import { createCachedSearch } from './search/cached-search.js';
 import { SearchController } from './search/search-controller.js';
 import type { SearchFn } from './search/search-state.js';
 import { AppView } from './ui/app-view.js';
@@ -9,6 +10,8 @@ import { debounce } from './utils/debounce.js';
 
 const fetchCountries: SearchFn = async (query, signal) =>
   (await searchCountries(query, signal)).map(mapCountryResponse);
+
+const cachedCountries = createCachedSearch(fetchCountries);
 
 const details = new CountryDetails();
 
@@ -19,7 +22,7 @@ const view = new AppView({
 });
 
 const controller = new SearchController({
-  search: fetchCountries,
+  search: cachedCountries.search,
   timeoutMs: REQUEST_TIMEOUT_MS,
   onChange: (state) => view.render(state),
 });
