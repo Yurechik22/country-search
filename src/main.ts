@@ -4,15 +4,18 @@ import { mapCountryResponse } from './domain/map-country.js';
 import { SearchController } from './search/search-controller.js';
 import type { SearchFn } from './search/search-state.js';
 import { AppView } from './ui/app-view.js';
+import { CountryDetails } from './ui/country-details.js';
 import { debounce } from './utils/debounce.js';
 
 const fetchCountries: SearchFn = async (query, signal) =>
   (await searchCountries(query, signal)).map(mapCountryResponse);
 
+const details = new CountryDetails();
+
 const view = new AppView({
   onQueryChange: handleQueryChange,
   onRetry: () => void controller.retry(),
-  onSelectCountry: () => undefined,
+  onSelectCountry: (country) => details.open(country),
 });
 
 const controller = new SearchController({
@@ -38,3 +41,4 @@ function handleQueryChange(query: string): void {
 }
 
 view.mount(document.body);
+details.mount(document.body);
