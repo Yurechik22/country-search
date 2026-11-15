@@ -95,6 +95,10 @@ button {
   margin-top: 12px;
 }
 
+.history[hidden] {
+  display: none;
+}
+
 .history__label {
   color: var(--muted);
   font-size: 0.875rem;
